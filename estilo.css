@@ -13,3 +13,7 @@ body {
   padding: 2em 2em 4em;
   text-align: justify;
 }
+
+main {
+  padding-top: 0.5em;
+}
