@@ -1,11 +1,14 @@
 html{
-
+  background-image: url(multimedia/background.jpg);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
 }
 
 body {
   flex-flow: row wrap;
   font: 400 15px Tahoma, sans-serif;
-  color: black;
+  color: white;
   font-size: 16px;
   line-height: 1.8;
   margin: 0 auto;
@@ -16,4 +19,9 @@ body {
 
 main {
   padding-top: 0.5em;
+}
+
+h1,h2 {
+  color:white;
+  text-shadow: 2px 2px 2px lightslategray;
 }
