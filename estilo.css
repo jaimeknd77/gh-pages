@@ -23,7 +23,7 @@ main {
 
 h1,h2 {
   color:white;
-  text-shadow: 2px 2px 2px lightslategray;
+  text-shadow: 2px 2px 2px grey;
 }
 
 h1 {
@@ -32,8 +32,12 @@ h1 {
 }
 
 h2 {
-  text-align: left;
+  text-align: center;
   font-size: 28px;
+}
+
+nav ul {
+  overflow: hidden;
 }
 
 nav ul li {
@@ -44,11 +48,10 @@ nav li a {
   display: block;
   color: grey;
   text-align: center;
-  padding: 2px 6px;
+  padding: 4px 4px;
   text-decoration: none;
-  box-shadow: 2px 2px white;
-  transition: all 0.2s linear;
-  font-size: 18px;
+  box-shadow: 1px 1px 1px 1px grey;
+  font-size: 20px;
 }
 
 nav ul li a:hover, nav ul li a:focus {
@@ -81,4 +84,46 @@ th {
 li, dt {
   padding: 10px;
   overflow: auto;
+}
+
+li a:hover {
+  color: white;
+  background: grey;
+  cursor: pointer;
+}
+
+dl dt {
+  border-left: 5px solid white;
+  padding-left: 5px;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+footer {
+  margin: 6em;
+  text-align: center;
+  border-style: dotted;
+}
+
+img {
+  display: block;
+  margin: 0 auto;
+  border: 1px solid grey;
+}
+
+footer img {
+  padding-top: 15px;
+  border: none;
+  padding-bottom: 15px;
+}
+
+video {
+  display: block;
+  margin: 0 auto;
+  border: 1px solid grey;
+}
+
+audio {
+  display: block;
+  margin: 0 auto;
 }
