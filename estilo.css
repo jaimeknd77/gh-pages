@@ -21,7 +21,6 @@ footer {
 h1, h2, h3 {
   font-weight: bold;
   color: white;
-  background-color: none;
   text-shadow: 0.05em 0.05em 0.05em grey;
   padding-top: 1em;
   padding-bottom: 0.5em;
@@ -62,7 +61,6 @@ p, li, ul, tr, th {
   font-size: medium;
   line-height: 1.8;
   color: white;
-  background-color: none;
   text-shadow: none;
   text-align: justify;
 }
@@ -204,11 +202,6 @@ nav li a {
   box-decoration-break: clone;
   box-shadow: 0.05em 0.05em 0.25em 0.05em grey;
   font-size: larger;
-}
-
-/** a=0 b=1 c=4 **/
-nav ul li a:hover, nav ul li a:focus {
-  transform: scale(1.04e);
 }
 
 /** a=0 b=1 c=2 **/
