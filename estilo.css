@@ -21,11 +21,11 @@ h1, h2, h3 {
   padding-top: 1em;
   padding-bottom: 0.5em;
   padding-left: 2em;
-  padding-right: 4em;
+  padding-right: 1em;
   margin-top: 1em;
   margin-bottom: 0.5em;
   margin-left: 2em;
-  margin-right: 4em;
+  margin-right: 1em;
 }
 
 /** a=0 b=0 c=1 **/
@@ -67,11 +67,11 @@ table {
   padding-top: 1em;
   padding-bottom: 0.5em;
   padding-left: 0em;
-  padding-right: 4em;
+  padding-right: 1em;
   margin-top: 1em;
   margin-bottom: 0.5em;
   margin-left: 6em;
-  margin-right: 4em;
+  margin-right: 1em;
 }
 
 /** a=0 b=0 c=1 **/
@@ -79,11 +79,11 @@ p {
   padding-top: 1em;
   padding-bottom: 0.5em;
   padding-left: 2em;
-  padding-right: 4em;
+  padding-right: 1em;
   margin-top: 1em;
   margin-bottom: 0.5em;
   margin-left: 2em;
-  margin-right: 4em;
+  margin-right: 1em;
 }
 
 /** a=0 b=0 c=2 **/
@@ -103,11 +103,11 @@ li, ul {
   padding-top: 0.25em;
   padding-bottom: 0.25em;
   padding-left: 4em;
-  padding-right: 4em;
+  padding-right: 1em;
   margin-top: 0.25em;
   margin-bottom: 0.25em;
   margin-left: 3em;
-  margin-right: 4em;
+  margin-right: 1em;
 }
 
 /** a=0 b=0 c=1 **/
@@ -128,11 +128,11 @@ img {
   padding-top: 0.25em;
   padding-bottom: 0.25em;
   padding-left: 4em;
-  padding-right: 4em;
+  padding-right: 1em;
   margin-top: 0.25em;
   margin-bottom: 0.25em;
   margin-left: 4em;
-  margin-right: 4em;
+  margin-right: 1em;
   text-align: center;
   text-justify: auto;
 }
@@ -150,11 +150,11 @@ video {
   padding-top: 0.25em;
   padding-bottom: 0.25em;
   padding-left: 4em;
-  padding-right: 4em;
+  padding-right: 1em;
   margin-top: 0.25em;
   margin-bottom: 0.25em;
   margin-left: 4em;
-  margin-right: 4em;
+  margin-right: 1em;
   text-align: center;
   text-justify: auto;
 }
@@ -164,11 +164,11 @@ audio {
   padding-top: 0.25em;
   padding-bottom: 0.25em;
   padding-left: 3.5em;
-  padding-right: 4em;
+  padding-right: 1em;
   margin-top: 0.25em;
   margin-bottom: 0.25em;
   margin-left: 3.5em;
-  margin-right: 4em;
+  margin-right: 1em;
   text-align: center;
   text-justify: auto;
 }
