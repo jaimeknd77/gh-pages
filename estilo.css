@@ -8,17 +8,13 @@ html {
 }
 
 /** a=0 b=0 c=1 **/
-body {
-  font: medium Tahoma, sans-serif;
-}
-
-/** a=0 b=0 c=1 **/
 footer {
   border: thin;
 }
 
 /** a=0 b=0 c=1 **/
 h1, h2, h3 {
+  font: medium Tahoma, sans-serif;
   font-weight: bold;
   color: white;
   text-shadow: 0.05em 0.05em 0.05em grey;
@@ -56,7 +52,7 @@ h3 {
 }
 
 /** a=0 b=0 c=1 **/
-p, li, ul, tr, th {
+p, li, ul, tr, th, a {
   font: medium Helvetica, serif;
   line-height: 1.8;
   color: white;
