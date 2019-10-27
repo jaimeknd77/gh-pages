@@ -9,7 +9,7 @@ html {
 
 /** a=0 b=0 c=1 **/
 body {
-  font: Tahoma, sans-serif;
+  font: medium Tahoma, sans-serif;
 }
 
 /** a=0 b=0 c=1 **/
@@ -57,8 +57,7 @@ h3 {
 
 /** a=0 b=0 c=1 **/
 p, li, ul, tr, th {
-  font: Helvetica, serif;
-  font-size: medium;
+  font: medium Helvetica, serif;
   line-height: 1.8;
   color: white;
   text-shadow: none;
