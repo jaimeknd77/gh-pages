@@ -24,7 +24,8 @@ class Jugador extends Modelo {
             this.orientacion = orientaciones.arriba;
         } else if(this.vy > 0){
             this.orientacion = orientaciones.abajo;
-        } else if(this.vx < 0){
+        }
+        if(this.vx < 0){
             this.orientacion = orientaciones.izquierda;
         } else if(this.vy > 0){
             this.orientacion = orientaciones.derecha;
@@ -52,11 +53,11 @@ class Jugador extends Modelo {
     }
 
     moverX (direccion){
-        this.vx = direccion;
+        this.vx = direccion * 3;
     }
 
     moverY (direccion){
-        this.vy = direccion;
+        this.vy = direccion * 3;
     }
 
 }
