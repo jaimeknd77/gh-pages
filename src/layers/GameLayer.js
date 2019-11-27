@@ -13,10 +13,16 @@ class GameLayer extends Layer {
 
         this.bloques = [];
 
+        this.scrollX = 0;
+        this.scrollY = 0;
+
         this.cargarMapa("res/" + nivelActual + ".txt");
+        this.calcularScroll();
     }
 
     actualizar (){
+        this.calcularScroll();
+        
         this.espacio.actualizar();
 
         this.jugador.actualizar();
