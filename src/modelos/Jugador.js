@@ -20,30 +20,38 @@ class Jugador extends Modelo {
     actualizar(){
         this.animacion.actualizar();
 
-        if(this.vy < 0){
-            this.orientacion = orientaciones.arriba;
-        } else if(this.vy > 0){
-            this.orientacion = orientaciones.abajo;
-        }
         if(this.vx < 0){
             this.orientacion = orientaciones.izquierda;
-        } else if(this.vy > 0){
+        } else if(this.vx > 0){
             this.orientacion = orientaciones.derecha;
+        } else {
+            if(this.vy < 0){
+                this.orientacion = orientaciones.arriba;
+            } else if(this.vy > 0){
+                this.orientacion = orientaciones.abajo;
+            } else {
+                this.orientacion = parado;
+            }
         }
 
-        switch (this.orientacion) {
-            case orientaciones.arriba:
-                this.animacion = this.arriba;
-                break;
-            case orientaciones.abajo:
-                this.animacion = this.abajo;
-                break;
-            case orientaciones.izquierda:
-                this.animacion = this.izquierda;
-                break;
-            case orientaciones.derecha:
-                this.animacion = this.derecha;
-                break;
+        switch (this.estado) {
+            case estados.moviendo:
+                if(this.vx != 0){
+                    if(this.orientacion == orientaciones.izquierda){
+                        this.animacion = this.izquierda;
+                    }
+                    if(this.orientacion == orientaciones.derecha){
+                        this.animacion = this.derecha;
+                    }
+                }
+                if(this.vx == 0){
+                    if(this.orientacion == orientaciones.arriba){
+                        this.animacion = this.arriba;
+                    }
+                    if(this.orientacion == orientaciones.abajo){
+                        this.animacion = this.abajo;
+                    }
+                }
         }
     }
 
