@@ -53,9 +53,10 @@ class Jugador extends Modelo {
         }
     }
 
-    dibujar (){
-        //contexto.drawImage(this.imagen, this.x - this.imagen.width/2, this.y - this.imagen.height/2);
-        this.animacion.dibujar(this.x, this.y);
+    dibujar (scrollX, scrollY){
+        scrollX = scrollX || 0;
+        scrollY = scrollY || 0;
+        this.animacion.dibujar(this.x - scrollX,this.y - scrollY);
     }
 
     moverX (direccion){

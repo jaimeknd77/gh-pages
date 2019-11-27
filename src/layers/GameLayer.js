@@ -13,29 +13,27 @@ class GameLayer extends Layer {
 
         this.bloques = [];
 
-        this.scrollX = 0;
-        this.scrollY = 0;
-
         this.cargarMapa("res/" + nivelActual + ".txt");
-        this.calcularScroll();
+
+        this.scrollX = this.calcularXInicial();
+        this.scrollY = this.calcularYInicial();
     }
 
     actualizar (){
-        this.calcularScroll();
-        
         this.espacio.actualizar();
 
         this.jugador.actualizar();
     }
 
     dibujar (){
+        this.calcularScroll();
         this.fondo.dibujar();
 
         for(var i=0; i < this.bloques.length; i++){
-            this.bloques[i].dibujar();
+            this.bloques[i].dibujar(this.scrollX, this.scrollY);
         }
 
-        this.jugador.dibujar();
+        this.jugador.dibujar(this.scrollX, this.scrollY);
     }
 
 
@@ -137,4 +135,11 @@ class GameLayer extends Layer {
 
     }
 
+    calcularXInicial(){
+        return this.jugador.x - 480/2;
+    }
+
+    calcularYInicial(){
+        return this.jugador.y - 320/2;
+    }
 }
