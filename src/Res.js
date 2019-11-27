@@ -5,6 +5,8 @@ var imagenes = {
 
     movimiento_arriba : "res/movimiento_arriba.png",
     movimiento_abajo : "res/movimiento_abajo.png",
+    movimiento_izquierda : "res/movimiento_izquierda.png",
+    movimiento_derecha : "res/movimiento_derecha.png",
 
     fondo : "res/fondo.png",
 

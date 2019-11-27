@@ -11,6 +11,8 @@ class Jugador extends Modelo {
 
         this.arriba = new Animacion(imagenes.movimiento_arriba, this.ancho, this.alto, 3, 9);
         this.abajo = new Animacion(imagenes.movimiento_abajo, this.ancho, this.alto, 3, 9);
+        this.izquierda = new Animacion(imagenes.movimiento_izquierda, this.ancho, this.alto, 3, 9);
+        this.derecha = new Animacion(imagenes.movimiento_derecha, this.ancho, this.alto, 3, 9);
 
         this.animacion = this.abajo;
     }
@@ -23,6 +25,11 @@ class Jugador extends Modelo {
         } else if(this.vy > 0){
             this.orientacion = orientaciones.abajo;
         }
+        if(this.vx < 0){
+            this.orientacion = orientaciones.izquierda;
+        } else if(this.vy > 0){
+            this.orientacion = orientaciones.derecha;
+        }
 
         switch (this.orientacion) {
             case orientaciones.arriba:
@@ -30,6 +37,12 @@ class Jugador extends Modelo {
                 break;
             case orientaciones.abajo:
                 this.animacion = this.abajo;
+                break;
+            case orientaciones.izquierda:
+                this.animacion = this.izquierda;
+                break;
+            case orientaciones.derecha:
+                this.animacion = this.derecha;
                 break;
         }
     }

@@ -20,4 +20,4 @@ var orientaciones = {};
 orientaciones.arriba = 1;
 orientaciones.abajo = 2;
 orientaciones.izquierda = 3;
-orientaciones.izquierda = 4;
+orientaciones.derecha = 4;
