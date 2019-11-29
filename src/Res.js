@@ -13,6 +13,11 @@ var imagenes = {
     limite_izquierda : "res/limite_izquierda.png",
     limite_derecha : "res/limite_derecha.png",
 
+    esquina_1 : "res/esquina_1.png",
+    esquina_2 : "res/esquina_2.png",
+    esquina_3 : "res/esquina_3.png",
+    esquina_4 : "res/esquina_4.png",
+
     suelo_1 : "res/suelo_1.png",
     suelo_2 : "res/suelo_2.png",
     suelo_3 : "res/suelo_3.png",

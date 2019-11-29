@@ -90,7 +90,7 @@ class GameLayer extends Layer {
 
     cargarObjetoMapa(simbolo, x, y){
         switch(simbolo) {
-            case "1":
+            case "J":
                 this.jugador = new Jugador(x, y);
                 // modificación para empezar a contar desde el suelo
                 this.jugador.y = this.jugador.y - this.jugador.alto/2;
@@ -133,6 +133,34 @@ class GameLayer extends Layer {
                 break;
             case "S":
                 var bloque = new Bloque(imagenes.suelo_1, x,y);
+                bloque.y = bloque.y - bloque.alto/2;
+                // modificación para empezar a contar desde el suelo
+                this.bloques.push(bloque);
+                this.espacio.agregarCuerpoEstatico(bloque);
+                break;
+            case "1":
+                var bloque = new Bloque(imagenes.esquina_1, x,y);
+                bloque.y = bloque.y - bloque.alto/2;
+                // modificación para empezar a contar desde el suelo
+                this.bloques.push(bloque);
+                this.espacio.agregarCuerpoEstatico(bloque);
+                break;
+            case "2":
+                var bloque = new Bloque(imagenes.esquina_2, x,y);
+                bloque.y = bloque.y - bloque.alto/2;
+                // modificación para empezar a contar desde el suelo
+                this.bloques.push(bloque);
+                this.espacio.agregarCuerpoEstatico(bloque);
+                break;
+            case "3":
+                var bloque = new Bloque(imagenes.esquina_3, x,y);
+                bloque.y = bloque.y - bloque.alto/2;
+                // modificación para empezar a contar desde el suelo
+                this.bloques.push(bloque);
+                this.espacio.agregarCuerpoEstatico(bloque);
+                break;
+            case "4":
+                var bloque = new Bloque(imagenes.esquina_4, x,y);
                 bloque.y = bloque.y - bloque.alto/2;
                 // modificación para empezar a contar desde el suelo
                 this.bloques.push(bloque);
