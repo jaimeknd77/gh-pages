@@ -3,10 +3,10 @@ class GameLayer extends Layer {
     constructor() {
         super();
 
-        this.iniciar();
+        this.aMapa = 256;
+        this.lMapa = 240;
 
-        this.width = 256;
-        this.height = 240;
+        this.iniciar();
     }
 
     iniciar() {
@@ -97,35 +97,35 @@ class GameLayer extends Layer {
                 this.jugador.y = this.jugador.y - this.jugador.alto/2;
                 this.espacio.agregarCuerpoDinamico(this.jugador);
                 break;
-            case "R":
+            case "#":
                 var bloque = new Bloque(imagenes.relleno, x,y);
                 bloque.y = bloque.y - bloque.alto/2;
                 // modificación para empezar a contar desde el suelo
                 this.bloques.push(bloque);
                 this.espacio.agregarCuerpoEstatico(bloque);
                 break;
-            case "A":
+            case "U":
                 var bloque = new Bloque(imagenes.limite_arriba, x,y);
                 bloque.y = bloque.y - bloque.alto/2;
                 // modificación para empezar a contar desde el suelo
                 this.bloques.push(bloque);
                 this.espacio.agregarCuerpoEstatico(bloque);
                 break;
-            case "B":
+            case "D":
                 var bloque = new Bloque(imagenes.limite_abajo, x,y);
                 bloque.y = bloque.y - bloque.alto/2;
                 // modificación para empezar a contar desde el suelo
                 this.bloques.push(bloque);
                 this.espacio.agregarCuerpoEstatico(bloque);
                 break;
-            case "I":
+            case "L":
                 var bloque = new Bloque(imagenes.limite_izquierda, x,y);
                 bloque.y = bloque.y - bloque.alto/2;
                 // modificación para empezar a contar desde el suelo
                 this.bloques.push(bloque);
                 this.espacio.agregarCuerpoEstatico(bloque);
                 break;
-            case "D":
+            case "R":
                 var bloque = new Bloque(imagenes.limite_derecha, x,y);
                 bloque.y = bloque.y - bloque.alto/2;
                 // modificación para empezar a contar desde el suelo
@@ -152,30 +152,30 @@ class GameLayer extends Layer {
 
     calcularScroll(){
         // limite izquierda
-        if ( this.jugador.x > this.width * 0.3) {
-            if (this.jugador.x - this.scrollX < this.width * 0.3) {
-                this.scrollX = this.jugador.x - this.width * 0.3;
+        if ( this.jugador.x > this.aMapa * 0.3) {
+            if (this.jugador.x - this.scrollX < this.aMapa * 0.3) {
+                this.scrollX = this.jugador.x - this.aMapa * 0.3;
             }
         }
 
         // limite derecha
-        if ( this.jugador.x < this.anchoMapa - this.width * 0.3 ) {
-            if (this.jugador.x - this.scrollX > this.width * 0.7) {
-                this.scrollX = this.jugador.x - this.width * 0.7;
+        if ( this.jugador.x < this.anchoMapa - this.aMapa * 0.3 ) {
+            if (this.jugador.x - this.scrollX > this.aMapa * 0.7) {
+                this.scrollX = this.jugador.x - this.aMapa * 0.7;
             }
         }
 
         // limite superior
-        if ( this.jugador.y > this.height * 0.3) {
-            if (this.jugador.y - this.scrollY < this.height * 0.3) {
-                this.scrollY = this.jugador.y - this.height * 0.3;
+        if ( this.jugador.y > this.lMapa * 0.3) {
+            if (this.jugador.y - this.scrollY < this.lMapa * 0.3) {
+                this.scrollY = this.jugador.y - this.lMapa * 0.3;
             }
         }
 
         // limite inferior
-        if ( this.jugador.y < this.largoMapa - this.height * 0.3 ) {
-            if (this.jugador.y - this.scrollY > this.height * 0.7) {
-                this.scrollY = this.jugador.y - this.height * 0.7;
+        if ( this.jugador.y < this.largoMapa - this.lMapa * 0.3 ) {
+            if (this.jugador.y - this.scrollY > this.lMapa * 0.7) {
+                this.scrollY = this.jugador.y - this.lMapa * 0.7;
             }
         }
     }
@@ -185,10 +185,10 @@ class GameLayer extends Layer {
     }
 
     calcularXInicial(){
-        return this.jugador.x - this.width/2;
+        return this.jugador.x - this.aMapa/2;
     }
 
     calcularYInicial(){
-        return this.jugador.y - this.height/2;
+        return this.jugador.y - this.lMapa/2;
     }
 }
