@@ -3,8 +3,8 @@ class GameLayer extends Layer {
     constructor() {
         super();
 
-        this.aMapa = 256;
-        this.lMapa = 240;
+        this.aMapa = 480;
+        this.lMapa = 320;
 
         this.iniciar();
     }
