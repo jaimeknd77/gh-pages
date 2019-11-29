@@ -15,7 +15,7 @@ var imagenes = {
 
     suelo_1 : "res/suelo_1.png",
     suelo_2 : "res/suelo_2.png",
-    suelo_3 : "res/suelo_2.png",
+    suelo_3 : "res/suelo_3.png",
 
     relleno : "res/relleno_1.png"
 

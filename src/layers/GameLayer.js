@@ -12,8 +12,6 @@ class GameLayer extends Layer {
     iniciar() {
         this.espacio = new Espacio(0);
 
-        //this.fondo = new Fondo(imagenes.fondo, 480 * 0.5, 320 * 0.5);
-
         this.fondo = [];
 
         this.bloques = [];
@@ -81,6 +79,7 @@ class GameLayer extends Layer {
                     var simbolo = linea[j];
                     var x = 16/2 + j * 16; // x central
                     var y = 16 + i * 16; // y de abajo
+                    this.cargarFondo(x, y);
                     this.cargarObjetoMapa(simbolo,x,y);
                 }
             }
@@ -132,22 +131,25 @@ class GameLayer extends Layer {
                 this.bloques.push(bloque);
                 this.espacio.agregarCuerpoEstatico(bloque);
                 break;
+            case "S":
+                var bloque = new Bloque(imagenes.suelo_1, x,y);
+                bloque.y = bloque.y - bloque.alto/2;
+                // modificación para empezar a contar desde el suelo
+                this.bloques.push(bloque);
+                this.espacio.agregarCuerpoEstatico(bloque);
+                break;
         }
     }
 
     cargarFondo(x, y){
         var suelo = Math.random() * (3 - 1) + 1;
         var rutaImagen;
-        switch (suelo) {
-            case 1:
-                rutaImagen = imagenes.suelo_1;
-            case 2:
-                rutaImagen = imagenes.suelo_2;
-            case 3:
-                rutaImagen = imagenes.suelo_3;
+        if(suelo < 2 && suelo >= 1){
+            rutaImagen = imagenes.suelo_1;
+        } else if(suelo < 3 && suelo >= 2){
+            rutaImagen = imagenes.suelo_2;
         }
-        var f = new Fondo(rutaImagen, x, y);
-        this.fondo.push(f);
+        this.fondo.push(new Fondo(rutaImagen, x, y));
     }
 
     calcularScroll(){
