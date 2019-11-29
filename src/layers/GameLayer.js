@@ -4,12 +4,17 @@ class GameLayer extends Layer {
         super();
 
         this.iniciar();
+
+        this.width = 256;
+        this.height = 240;
     }
 
     iniciar() {
         this.espacio = new Espacio(0);
 
-        this.fondo = new Fondo(imagenes.fondo, 480 * 0.5, 320 * 0.5);
+        //this.fondo = new Fondo(imagenes.fondo, 480 * 0.5, 320 * 0.5);
+
+        this.fondo = [];
 
         this.bloques = [];
 
@@ -27,7 +32,9 @@ class GameLayer extends Layer {
 
     dibujar (){
         this.calcularScroll();
-        this.fondo.dibujar();
+        for(var i=0; i < this.fondo.length; i++){
+            this.fondo[i].dibujar(this.scrollX, this.scrollY);
+        }
 
         for(var i=0; i < this.bloques.length; i++){
             this.bloques[i].dibujar(this.scrollX, this.scrollY);
@@ -65,15 +72,15 @@ class GameLayer extends Layer {
         fichero.onreadystatechange = function () {
             var texto = fichero.responseText;
             var lineas = texto.split('\n');
-            this.anchoMapa = (lineas[0].length-1) * 40;
-            this.largoMapa = (lineas.length-1) * 32;
+            this.anchoMapa = (lineas[0].length-1) * 16;
+            this.largoMapa = (lineas.length-1) * 16;
             console.log(this.largoMapa);
             for (var i = 0; i < lineas.length; i++){
                 var linea = lineas[i];
                 for (var j = 0; j < linea.length; j++){
                     var simbolo = linea[j];
-                    var x = 40/2 + j * 40; // x central
-                    var y = 32 + i * 32; // y de abajo
+                    var x = 16/2 + j * 16; // x central
+                    var y = 16 + i * 16; // y de abajo
                     this.cargarObjetoMapa(simbolo,x,y);
                 }
             }
@@ -90,8 +97,36 @@ class GameLayer extends Layer {
                 this.jugador.y = this.jugador.y - this.jugador.alto/2;
                 this.espacio.agregarCuerpoDinamico(this.jugador);
                 break;
-            case "#":
-                var bloque = new Bloque(imagenes.bloque_tierra, x,y);
+            case "R":
+                var bloque = new Bloque(imagenes.relleno, x,y);
+                bloque.y = bloque.y - bloque.alto/2;
+                // modificación para empezar a contar desde el suelo
+                this.bloques.push(bloque);
+                this.espacio.agregarCuerpoEstatico(bloque);
+                break;
+            case "A":
+                var bloque = new Bloque(imagenes.limite_arriba, x,y);
+                bloque.y = bloque.y - bloque.alto/2;
+                // modificación para empezar a contar desde el suelo
+                this.bloques.push(bloque);
+                this.espacio.agregarCuerpoEstatico(bloque);
+                break;
+            case "B":
+                var bloque = new Bloque(imagenes.limite_abajo, x,y);
+                bloque.y = bloque.y - bloque.alto/2;
+                // modificación para empezar a contar desde el suelo
+                this.bloques.push(bloque);
+                this.espacio.agregarCuerpoEstatico(bloque);
+                break;
+            case "I":
+                var bloque = new Bloque(imagenes.limite_izquierda, x,y);
+                bloque.y = bloque.y - bloque.alto/2;
+                // modificación para empezar a contar desde el suelo
+                this.bloques.push(bloque);
+                this.espacio.agregarCuerpoEstatico(bloque);
+                break;
+            case "D":
+                var bloque = new Bloque(imagenes.limite_derecha, x,y);
                 bloque.y = bloque.y - bloque.alto/2;
                 // modificación para empezar a contar desde el suelo
                 this.bloques.push(bloque);
@@ -100,33 +135,47 @@ class GameLayer extends Layer {
         }
     }
 
+    cargarFondo(x, y){
+        var suelo = Math.random() * (3 - 1) + 1;
+        var rutaImagen;
+        switch (suelo) {
+            case 1:
+                rutaImagen = imagenes.suelo_1;
+            case 2:
+                rutaImagen = imagenes.suelo_2;
+            case 3:
+                rutaImagen = imagenes.suelo_3;
+        }
+        var f = new Fondo(rutaImagen, x, y);
+        this.fondo.push(f);
+    }
 
     calcularScroll(){
         // limite izquierda
-        if ( this.jugador.x > 480 * 0.3) {
-            if (this.jugador.x - this.scrollX < 480 * 0.3) {
-                this.scrollX = this.jugador.x - 480 * 0.3;
+        if ( this.jugador.x > this.width * 0.3) {
+            if (this.jugador.x - this.scrollX < this.width * 0.3) {
+                this.scrollX = this.jugador.x - this.width * 0.3;
             }
         }
 
         // limite derecha
-        if ( this.jugador.x < this.anchoMapa - 480 * 0.3 ) {
-            if (this.jugador.x - this.scrollX > 480 * 0.7) {
-                this.scrollX = this.jugador.x - 480 * 0.7;
+        if ( this.jugador.x < this.anchoMapa - this.width * 0.3 ) {
+            if (this.jugador.x - this.scrollX > this.width * 0.7) {
+                this.scrollX = this.jugador.x - this.width * 0.7;
             }
         }
 
         // limite superior
-        if ( this.jugador.y > 320 * 0.3) {
-            if (this.jugador.y - this.scrollY < 320 * 0.3) {
-                this.scrollY = this.jugador.y - 320 * 0.3;
+        if ( this.jugador.y > this.height * 0.3) {
+            if (this.jugador.y - this.scrollY < this.height * 0.3) {
+                this.scrollY = this.jugador.y - this.height * 0.3;
             }
         }
 
         // limite inferior
-        if ( this.jugador.y < this.largoMapa - 320 * 0.3 ) {
-            if (this.jugador.y - this.scrollY > 320 * 0.7) {
-                this.scrollY = this.jugador.y - 320 * 0.7;
+        if ( this.jugador.y < this.largoMapa - this.height * 0.3 ) {
+            if (this.jugador.y - this.scrollY > this.height * 0.7) {
+                this.scrollY = this.jugador.y - this.height * 0.7;
             }
         }
     }
@@ -136,10 +185,10 @@ class GameLayer extends Layer {
     }
 
     calcularXInicial(){
-        return this.jugador.x - 480/2;
+        return this.jugador.x - this.width/2;
     }
 
     calcularYInicial(){
-        return this.jugador.y - 320/2;
+        return this.jugador.y - this.height/2;
     }
 }

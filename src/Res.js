@@ -8,11 +8,18 @@ var imagenes = {
     movimiento_izquierda : "res/movimiento_izquierda.png",
     movimiento_derecha : "res/movimiento_derecha.png",
 
-    fondo : "res/fondo.png",
+    limite_arriba : "res/limite_arriba.png",
+    limite_abajo : "res/limite_abajo.png",
+    limite_izquierda : "res/limite_izquierda.png",
+    limite_derecha : "res/limite_derecha.png",
 
-    bloque_tierra : "res/bloque_tierra.png",
-    bloque_metal : "res/bloque_metal.png",
-    bloque_fondo_muro : "res/bloque_fondo_muro.png",
+    suelo_1 : "res/suelo_1.png",
+    suelo_2 : "res/suelo_2.png",
+    suelo_3 : "res/suelo_2.png",
+
+    relleno : "res/relleno_1.png"
+
+    //fondo : "res/fondo.png",
 };
 
 var rutasImagenes = Object.values(imagenes);
