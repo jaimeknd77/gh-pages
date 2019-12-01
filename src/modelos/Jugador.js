@@ -14,10 +14,10 @@ class Jugador extends Modelo {
         this.mIzquierda = new Animacion(imagenes.movimiento_izquierda, this.ancho, this.alto, 3, 9);
         this.mDerecha = new Animacion(imagenes.movimiento_derecha, this.ancho, this.alto, 3, 9);
 
-        this.pArriba = new Animacion(imagenes.parado_arriba, this.ancho, this.alto, 3, 3);
-        this.pAbajo = new Animacion(imagenes.parado_abajo, this.ancho, this.alto, 3, 3);
-        this.pIzquierda = new Animacion(imagenes.parado_izquierda, this.ancho, this.alto, 3, 3);
-        this.pDerecha = new Animacion(imagenes.parado_derecha, this.ancho, this.alto, 3, 3);
+        this.pArriba = new Animacion(imagenes.parado_arriba, this.ancho, this.alto, 3, 1);
+        this.pAbajo = new Animacion(imagenes.parado_abajo, this.ancho, this.alto, 3, 1);
+        this.pIzquierda = new Animacion(imagenes.parado_izquierda, this.ancho, this.alto, 3, 1);
+        this.pDerecha = new Animacion(imagenes.parado_derecha, this.ancho, this.alto, 3, 1);
 
         this.animacion = this.pDerecha;
     }
@@ -54,6 +54,7 @@ class Jugador extends Modelo {
                 } else {
                     this.animacion = this.mDerecha;
                 }
+                break;
 
             case estados.parado:
                 if(this.orientacion == orientaciones.arriba){
@@ -65,6 +66,7 @@ class Jugador extends Modelo {
                 } else {
                     this.animacion = this.pDerecha;
                 }
+                break;
         }
     }
 

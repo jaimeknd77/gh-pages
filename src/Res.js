@@ -8,10 +8,10 @@ var imagenes = {
     movimiento_izquierda : "res/movimiento_izquierda.png",
     movimiento_derecha : "res/movimiento_derecha.png",
 
-    parado_arriba : "res/parado_arriba.png",
-    parado_abajo : "res/parado_abajo.png",
-    parado_izquierda : "res/parado_izquierda.png",
-    parado_derecha : "res/parado_derecha.png",
+    parado_arriba : "res/arriba_1.png",
+    parado_abajo : "res/abajo_1.png",
+    parado_izquierda : "res/izquierda_1.png",
+    parado_derecha : "res/derecha_1.png",
 
     limite_arriba : "res/limite_arriba.png",
     limite_abajo : "res/limite_abajo.png",
