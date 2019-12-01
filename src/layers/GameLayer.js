@@ -20,12 +20,18 @@ class GameLayer extends Layer {
 
         this.scrollX = this.calcularXInicial();
         this.scrollY = this.calcularYInicial();
+
+        this.vida = new Fondo(imagenes.corazon_entero, this.aMapa*0.05, this.lMapa*0.05);
+
+        this.corazon = new Fondo(imagenes.corazon_mitad, this.jugador.x, this.jugador.y);
     }
 
     actualizar (){
         this.espacio.actualizar();
 
         this.jugador.actualizar();
+
+        this.corazon.x = this.jugador.x; this.corazon.y = this.jugador.y - this.jugador.ancho;
     }
 
     dibujar (){
@@ -38,7 +44,11 @@ class GameLayer extends Layer {
             this.bloques[i].dibujar(this.scrollX, this.scrollY);
         }
 
+        this.vida.dibujar();
+
         this.jugador.dibujar(this.scrollX, this.scrollY);
+
+        this.corazon.dibujar(this.scrollX, this.scrollY);
     }
 
 

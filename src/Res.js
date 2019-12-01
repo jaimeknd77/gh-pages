@@ -8,6 +8,11 @@ var imagenes = {
     movimiento_izquierda : "res/movimiento_izquierda.png",
     movimiento_derecha : "res/movimiento_derecha.png",
 
+    parado_arriba : "res/parado_arriba.png",
+    parado_abajo : "res/parado_abajo.png",
+    parado_izquierda : "res/parado_izquierda.png",
+    parado_derecha : "res/parado_derecha.png",
+
     limite_arriba : "res/limite_arriba.png",
     limite_abajo : "res/limite_abajo.png",
     limite_izquierda : "res/limite_izquierda.png",
@@ -22,8 +27,10 @@ var imagenes = {
     suelo_2 : "res/suelo_2.png",
     suelo_3 : "res/suelo_3.png",
 
-    relleno : "res/relleno_1.png"
+    relleno : "res/relleno_1.png",
 
+    corazon_entero : "res/corazon_entero.png",
+    corazon_mitad : "res/corazon_mitad.png",
     //fondo : "res/fondo.png",
 };
 
