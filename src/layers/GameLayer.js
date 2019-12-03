@@ -16,6 +16,10 @@ class GameLayer extends Layer {
 
         this.bloques = [];
 
+        this.enemigos_terrestres = [];
+
+        this.enemigos_aereos = [];
+
         this.cargarMapa("res/" + nivelActual + ".txt");
 
         this.scrollX = this.calcularXInicial();
@@ -28,6 +32,16 @@ class GameLayer extends Layer {
 
     actualizar (){
         this.espacio.actualizar();
+
+        for(var i=0; i < this.enemigos_terrestres.length; i++){
+            this.enemigos_terrestres[i].calcularPosJugador(this.jugador);
+
+            this.enemigos_terrestres[i].actualizar();
+        }
+
+        for(var i=0; i < this.enemigos_aereos.length; i++){
+            this.enemigos_aereos[i].actualizar();
+        }
 
         this.jugador.actualizar();
 
@@ -42,6 +56,14 @@ class GameLayer extends Layer {
 
         for(var i=0; i < this.bloques.length; i++){
             this.bloques[i].dibujar(this.scrollX, this.scrollY);
+        }
+
+        for(var i=0; i < this.enemigos_terrestres.length; i++){
+            this.enemigos_terrestres[i].dibujar(this.scrollX, this.scrollY);
+        }
+
+        for(var i=0; i < this.enemigos_aereos.length; i++){
+            this.enemigos_aereos[i].dibujar(this.scrollX, this.scrollY);
         }
 
         this.vida.dibujar();
@@ -176,6 +198,18 @@ class GameLayer extends Layer {
                 this.bloques.push(bloque);
                 this.espacio.agregarCuerpoEstatico(bloque);
                 break;
+            case "T":
+                var enemigoTerrestre = new EnemigoTerrestre(x, y);
+                enemigoTerrestre.y = enemigoTerrestre.y - enemigoTerrestre.alto/2;
+                this.enemigos_terrestres.push(enemigoTerrestre);
+                this.espacio.agregarCuerpoDinamico(enemigoTerrestre);
+                break;
+            case "A":
+                var enemigoAereo = new EnemigoAereo(x, y);
+                enemigoAereo.y = enemigoAereo.y - enemigoAereo.alto/2;
+                this.enemigos_aereos.push(enemigoAereo);
+                this.espacio.agregarCuerpoDinamico(enemigoAereo);
+                break;
         }
     }
 
@@ -231,4 +265,5 @@ class GameLayer extends Layer {
     calcularYInicial(){
         return this.jugador.y - this.lMapa/2;
     }
+
 }

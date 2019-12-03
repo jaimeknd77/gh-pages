@@ -40,4 +40,12 @@ class Modelo {
         return colisiona;
     }
 
+    getX(){
+        return this.x;
+    }
+
+    getY(){
+        return this.y;
+    }
+
 }

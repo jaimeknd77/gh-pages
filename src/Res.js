@@ -3,6 +3,12 @@ var cache = [];
 var imagenes = {
     jugador : "res/jugador.png",
 
+    enemigo_terrestre : "res/enemigo_terrestre.png",
+    enemigo_terrestre_movimiento : "res/enemigo_terrestre_movimiento.png",
+
+    enemigo_aereo : "res/enemigo_aereo.png",
+    enemigo_aereo_movimiento : "res/enemigo_aereo_movimiento.png",
+
     movimiento_arriba : "res/movimiento_arriba.png",
     movimiento_abajo : "res/movimiento_abajo.png",
     movimiento_izquierda : "res/movimiento_izquierda.png",
@@ -31,7 +37,6 @@ var imagenes = {
 
     corazon_entero : "res/corazon_entero.png",
     corazon_mitad : "res/corazon_mitad.png",
-    //fondo : "res/fondo.png",
 };
 
 var rutasImagenes = Object.values(imagenes);
