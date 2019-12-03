@@ -290,7 +290,7 @@ class GameLayer extends Layer {
 
         for(var i=0; i < jugador.vida/2 - 1; i++){
             var corazon = new Fondo(imagenes.corazon_entero, xInicio, yInicio);
-            xInicio += 16;
+            xInicio += 12;
 
             this.vidas.push(corazon);
         }
