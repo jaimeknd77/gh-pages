@@ -28,7 +28,7 @@ class EnemigoTerrestre extends Enemigo {
         } else if(dy < 0){
             this.vy = -1;
         } else {
-            this.vx = 0;
+            this.vy = 0;
         }
     }
 

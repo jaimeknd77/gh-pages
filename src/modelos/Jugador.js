@@ -6,6 +6,9 @@ class Jugador extends Modelo {
         this.vx = 0; // velocidadX
         this.vy = 0; // velocidadY
 
+        this.ataque = 2;
+        this.vida = 6;
+
         this.orientacion = orientaciones.arriba;
         this.estado = estados.moviendo;
 

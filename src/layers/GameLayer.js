@@ -25,9 +25,12 @@ class GameLayer extends Layer {
         this.scrollX = this.calcularXInicial();
         this.scrollY = this.calcularYInicial();
 
-        this.vida = new Fondo(imagenes.corazon_entero, this.aMapa*0.05, this.lMapa*0.05);
+        this.vidas = [];
 
-        this.corazon = new Fondo(imagenes.corazon_mitad, this.jugador.x, this.jugador.y);
+        this.calcularVida(this.jugador);
+        //this.vida = new Fondo(imagenes.corazon_entero, this.aMapa*0.05, this.lMapa*0.05);
+
+        //this.corazon = new Fondo(imagenes.corazon_mitad, this.jugador.x, this.jugador.y);
     }
 
     actualizar (){
@@ -37,15 +40,24 @@ class GameLayer extends Layer {
             this.enemigos_terrestres[i].calcularPosJugador(this.jugador);
 
             this.enemigos_terrestres[i].actualizar();
+
+            if(this.enemigos_terrestres[i].colisiona(this.jugador)){
+                this.enemigos_terrestres[i].atacar(this.jugador);
+                if(this.jugador.vida <= 0){
+                    this.iniciar();
+                }
+            }
         }
 
         for(var i=0; i < this.enemigos_aereos.length; i++){
             this.enemigos_aereos[i].actualizar();
         }
 
+        this.calcularVida(this.jugador);
+
         this.jugador.actualizar();
 
-        this.corazon.x = this.jugador.x; this.corazon.y = this.jugador.y - this.jugador.ancho;
+        //this.corazon.x = this.jugador.x; this.corazon.y = this.jugador.y - this.jugador.ancho;
     }
 
     dibujar (){
@@ -66,11 +78,15 @@ class GameLayer extends Layer {
             this.enemigos_aereos[i].dibujar(this.scrollX, this.scrollY);
         }
 
-        this.vida.dibujar();
+        //this.vida.dibujar();
+
+        for(var i=0; i<this.vidas.length; i++){
+            this.vidas[i].dibujar();
+        }
 
         this.jugador.dibujar(this.scrollX, this.scrollY);
 
-        this.corazon.dibujar(this.scrollX, this.scrollY);
+        //this.corazon.dibujar(this.scrollX, this.scrollY);
     }
 
 
@@ -264,6 +280,30 @@ class GameLayer extends Layer {
 
     calcularYInicial(){
         return this.jugador.y - this.lMapa/2;
+    }
+
+    calcularVida(jugador){
+        this.vidas = [];
+
+        var xInicio = this.aMapa*0.05;
+        var yInicio = this.lMapa*0.05;
+
+        for(var i=0; i < jugador.vida/2 - 1; i++){
+            var corazon = new Fondo(imagenes.corazon_entero, xInicio, yInicio);
+            xInicio += 16;
+
+            this.vidas.push(corazon);
+        }
+
+        if(jugador.vida%2 == 0){
+            var corazon = new Fondo(imagenes.corazon_entero, xInicio, yInicio);
+
+            this.vidas.push(corazon);
+        } else {
+            var medioCorazon = new Fondo(imagenes.corazon_mitad, xInicio, yInicio);
+
+            this.vidas.push(medioCorazon);
+        }
     }
 
 }

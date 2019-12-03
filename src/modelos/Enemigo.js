@@ -7,10 +7,16 @@ class Enemigo extends Modelo {
 
         this.vx = 0;
         this.vy = 0;
+
+        this.ataque = 1;
+        this.vida = 2;
+
+        this.cadencia = 60;
     }
 
     actualizar(){
         this.animacion.actualizar();
+        this.cadencia--;
     }
 
     dibujar (scrollX, scrollY){
@@ -19,4 +25,11 @@ class Enemigo extends Modelo {
         this.animacion.dibujar(this.x - scrollX, this.y - scrollY);
     }
 
+    atacar(jugador){
+        if(this.cadencia <= 0){
+            jugador.vida -= this.ataque;
+            this.cadencia = 60;
+            console.log("Ataque");
+        }
+    }
 }

@@ -16,6 +16,7 @@ var nivelMaximo = 4;
 var estados = {};
 estados.moviendo= 1;
 estados.parado = 2;
+estados.disparando = 3;
 
 var orientaciones = {};
 orientaciones.arriba = 1;
