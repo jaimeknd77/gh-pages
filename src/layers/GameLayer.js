@@ -24,6 +24,8 @@ class GameLayer extends Layer {
 
         this.disparosJugador = [];
 
+        this.disparosEnemigos = [];
+
         this.cargarMapa("res/" + nivelActual + ".txt");
 
         this.scrollX = this.calcularXInicial();
@@ -52,6 +54,11 @@ class GameLayer extends Layer {
 
         for(var i=0; i < this.enemigos_aereos.length; i++){
             this.enemigos_aereos[i].actualizar();
+            var disparo = this.enemigos_aereos[i].disparar(this.jugador);
+            if(disparo != null){
+                this.disparosEnemigos.push(disparo);
+                this.espacio.agregarCuerpoDinamico(disparo);
+            }
         }
 
         this.calcularVida(this.jugador);
@@ -100,6 +107,45 @@ class GameLayer extends Layer {
             }
         }
 
+        for(var i=0; i < this.disparosEnemigos.length; i++){
+            this.disparosEnemigos[i].actualizar();
+
+            if(this.disparosEnemigos[i] != null && this.jugador != null && this.disparosEnemigos[i].colisiona(this.jugador)){
+                this.jugador.vida -= this.disparosEnemigos[i].ataque;
+
+                this.disparosEnemigos.splice(i, 1);
+                i = i - 1;
+
+                if(this.jugador.vida <= 0){
+                    this.iniciar();
+                }
+            }
+
+            for(var j=0; j < this.bordes.length; j++){
+                if(this.disparosEnemigos[i] != null
+                    && this.bordes[j] != null
+                    && this.disparosEnemigos[i].colisiona(this.bordes[j])){
+                    this.espacio.eliminarCuerpoDinamico(this.disparosEnemigos[i]);
+                    this.disparosEnemigos.splice(i, 1);
+                    i = i - 1;
+                }
+            }
+
+            for(var j=0; j < this.destruibles.length; j++){
+                if(this.disparosEnemigos[i] != null
+                    && this.destruibles[j] != null
+                    && this.disparosEnemigos[i].colisiona(this.destruibles[j])){
+                    this.espacio.eliminarCuerpoDinamico(this.disparosEnemigos[i]);
+                    this.disparosEnemigos.splice(i, 1);
+                    i = i - 1;
+
+                    this.espacio.eliminarCuerpoEstatico(this.destruibles[j]);
+                    this.destruibles.splice(j, 1);
+                    j = j - 1;
+                }
+            }
+        }
+
     }
 
     dibujar (){
@@ -132,6 +178,10 @@ class GameLayer extends Layer {
 
         for(var i=0; i < this.disparosJugador.length; i++){
             this.disparosJugador[i].dibujar(this.scrollX, this.scrollY);
+        }
+
+        for(var i=0; i < this.disparosEnemigos.length; i++){
+            this.disparosEnemigos[i].dibujar(this.scrollX, this.scrollY);
         }
 
     }

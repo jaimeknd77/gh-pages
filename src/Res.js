@@ -9,6 +9,9 @@ var imagenes = {
     enemigo_aereo : "res/enemigo_aereo.png",
     enemigo_aereo_movimiento : "res/enemigo_aereo_movimiento.png",
 
+    disparo_enemigo : "res/fuego_1.png",
+    disparo_enemigo_movimiento : "res/fireball.png",
+
     movimiento_arriba : "res/movimiento_arriba.png",
     movimiento_abajo : "res/movimiento_abajo.png",
     movimiento_izquierda : "res/movimiento_izquierda.png",

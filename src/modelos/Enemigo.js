@@ -31,7 +31,6 @@ class Enemigo extends Modelo {
         if(this.cadencia == 0){
             jugador.vida -= this.ataque;
             this.cadencia = 60;
-            console.log("Ataque");
         }
     }
 }
