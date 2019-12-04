@@ -1,7 +1,7 @@
 class EnemigoTerrestre extends Enemigo {
 
-    constructor(x, y) {
-        super(imagenes.enemigo_terrestre, imagenes.enemigo_terrestre_movimiento, x, y);
+    constructor(x, y, vida, ataque) {
+        super(imagenes.enemigo_terrestre, imagenes.enemigo_terrestre_movimiento, x, y, vida, ataque);
 
         this.vx = 1;
         this.vy = 1;

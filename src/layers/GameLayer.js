@@ -14,7 +14,9 @@ class GameLayer extends Layer {
 
         this.fondo = [];
 
-        this.bloques = [];
+        this.bordes = [];
+
+        this.destruibles = [];
 
         this.enemigos_terrestres = [];
 
@@ -30,9 +32,6 @@ class GameLayer extends Layer {
         this.vidas = [];
 
         this.calcularVida(this.jugador);
-        //this.vida = new Fondo(imagenes.corazon_entero, this.aMapa*0.05, this.lMapa*0.05);
-
-        //this.corazon = new Fondo(imagenes.corazon_mitad, this.jugador.x, this.jugador.y);
     }
 
     actualizar (){
@@ -61,10 +60,46 @@ class GameLayer extends Layer {
 
         // Colisiones
         for(var i=0; i < this.disparosJugador.length; i++){
+            for(var j=0; j < this.enemigos_terrestres.length; j++){
+                if(this.disparosJugador[i] != null
+                    && this.enemigos_terrestres[j] != null
+                    && this.disparosJugador[i].colisiona(this.enemigos_terrestres[j])){
+                    this.disparosJugador.splice(i, 1);
+                    i = i - 1;
 
+                    this.enemigos_terrestres[j].vida -= this.jugador.ataque;
+                    if(this.enemigos_terrestres[j].vida <= 0){
+                        this.enemigos_terrestres.splice(j, 1);
+                        j = j - 1;
+                    }
+                }
+            }
+
+            for(var j=0; j < this.destruibles.length; j++){
+                if(this.disparosJugador[i] != null
+                    && this.destruibles[j] != null
+                    && this.disparosJugador[i].colisiona(this.destruibles[j])){
+                    this.espacio.eliminarCuerpoDinamico(this.disparosJugador[i]);
+                    this.disparosJugador.splice(i, 1);
+                    i = i - 1;
+
+                    this.espacio.eliminarCuerpoEstatico(this.destruibles[j]);
+                    this.destruibles.splice(j, 1);
+                    j = j - 1;
+                }
+            }
+
+            for(var j=0; j < this.bordes.length; j++){
+                if(this.disparosJugador[i] != null
+                    && this.bordes[j] != null
+                    && this.disparosJugador[i].colisiona(this.bordes[j])){
+                    this.espacio.eliminarCuerpoDinamico(this.disparosJugador[i]);
+                    this.disparosJugador.splice(i, 1);
+                    i = i - 1;
+                }
+            }
         }
 
-        //this.corazon.x = this.jugador.x; this.corazon.y = this.jugador.y - this.jugador.ancho;
     }
 
     dibujar (){
@@ -73,8 +108,12 @@ class GameLayer extends Layer {
             this.fondo[i].dibujar(this.scrollX, this.scrollY);
         }
 
-        for(var i=0; i < this.bloques.length; i++){
-            this.bloques[i].dibujar(this.scrollX, this.scrollY);
+        for(var i=0; i < this.bordes.length; i++){
+            this.bordes[i].dibujar(this.scrollX, this.scrollY);
+        }
+
+        for(var i=0; i < this.destruibles.length; i++){
+            this.destruibles[i].dibujar(this.scrollX, this.scrollY);
         }
 
         for(var i=0; i < this.enemigos_terrestres.length; i++){
@@ -84,8 +123,6 @@ class GameLayer extends Layer {
         for(var i=0; i < this.enemigos_aereos.length; i++){
             this.enemigos_aereos[i].dibujar(this.scrollX, this.scrollY);
         }
-
-        //this.vida.dibujar();
 
         for(var i=0; i<this.vidas.length; i++){
             this.vidas[i].dibujar();
@@ -97,7 +134,6 @@ class GameLayer extends Layer {
             this.disparosJugador[i].dibujar(this.scrollX, this.scrollY);
         }
 
-        //this.corazon.dibujar(this.scrollX, this.scrollY);
     }
 
 
@@ -107,8 +143,8 @@ class GameLayer extends Layer {
             var nuevoDisparo = this.jugador.disparar();
 
             if(nuevoDisparo != null){
-                this.espacio.agregarCuerpoDinamico(nuevoDisparo);
                 this.disparosJugador.push(nuevoDisparo);
+                this.espacio.agregarCuerpoDinamico(nuevoDisparo);
             }
         }
 
@@ -161,88 +197,72 @@ class GameLayer extends Layer {
         switch(simbolo) {
             case "J":
                 this.jugador = new Jugador(x, y);
-                // modificación para empezar a contar desde el suelo
                 this.jugador.y = this.jugador.y - this.jugador.alto/2;
                 this.espacio.agregarCuerpoDinamico(this.jugador);
                 break;
             case "#":
-                var bloque = new Bloque(imagenes.relleno, x,y);
+                var bloque = new Fondo(imagenes.relleno, x,y);
                 bloque.y = bloque.y - bloque.alto/2;
-                // modificación para empezar a contar desde el suelo
-                this.bloques.push(bloque);
-                this.espacio.agregarCuerpoEstatico(bloque);
+                this.fondo.push(bloque);
                 break;
             case "U":
                 var bloque = new Bloque(imagenes.limite_arriba, x,y);
                 bloque.y = bloque.y - bloque.alto/2;
-                // modificación para empezar a contar desde el suelo
-                this.bloques.push(bloque);
+                this.bordes.push(bloque);
                 this.espacio.agregarCuerpoEstatico(bloque);
                 break;
             case "D":
                 var bloque = new Bloque(imagenes.limite_abajo, x,y);
                 bloque.y = bloque.y - bloque.alto/2;
-                // modificación para empezar a contar desde el suelo
-                this.bloques.push(bloque);
+                this.bordes.push(bloque);
                 this.espacio.agregarCuerpoEstatico(bloque);
                 break;
             case "L":
                 var bloque = new Bloque(imagenes.limite_izquierda, x,y);
                 bloque.y = bloque.y - bloque.alto/2;
-                // modificación para empezar a contar desde el suelo
-                this.bloques.push(bloque);
+                this.bordes.push(bloque);
                 this.espacio.agregarCuerpoEstatico(bloque);
                 break;
             case "R":
                 var bloque = new Bloque(imagenes.limite_derecha, x,y);
                 bloque.y = bloque.y - bloque.alto/2;
-                // modificación para empezar a contar desde el suelo
-                this.bloques.push(bloque);
+                this.bordes.push(bloque);
                 this.espacio.agregarCuerpoEstatico(bloque);
                 break;
-            case "S":
-                var bloque = new Bloque(imagenes.suelo_1, x,y);
+            case "*":
+                var bloque = new Bloque(imagenes.destruible, x,y);
                 bloque.y = bloque.y - bloque.alto/2;
-                // modificación para empezar a contar desde el suelo
-                this.bloques.push(bloque);
+                this.destruibles.push(bloque);
                 this.espacio.agregarCuerpoEstatico(bloque);
                 break;
             case "1":
                 var bloque = new Bloque(imagenes.esquina_1, x,y);
                 bloque.y = bloque.y - bloque.alto/2;
-                // modificación para empezar a contar desde el suelo
-                this.bloques.push(bloque);
-                this.espacio.agregarCuerpoEstatico(bloque);
+                this.fondo.push(bloque);
                 break;
             case "2":
                 var bloque = new Bloque(imagenes.esquina_2, x,y);
                 bloque.y = bloque.y - bloque.alto/2;
-                // modificación para empezar a contar desde el suelo
-                this.bloques.push(bloque);
-                this.espacio.agregarCuerpoEstatico(bloque);
+                this.fondo.push(bloque);
                 break;
             case "3":
                 var bloque = new Bloque(imagenes.esquina_3, x,y);
                 bloque.y = bloque.y - bloque.alto/2;
-                // modificación para empezar a contar desde el suelo
-                this.bloques.push(bloque);
-                this.espacio.agregarCuerpoEstatico(bloque);
+                this.fondo.push(bloque);
                 break;
             case "4":
                 var bloque = new Bloque(imagenes.esquina_4, x,y);
                 bloque.y = bloque.y - bloque.alto/2;
-                // modificación para empezar a contar desde el suelo
-                this.bloques.push(bloque);
-                this.espacio.agregarCuerpoEstatico(bloque);
+                this.fondo.push(bloque);
                 break;
             case "T":
-                var enemigoTerrestre = new EnemigoTerrestre(x, y);
+                var enemigoTerrestre = new EnemigoTerrestre(x, y, nivelActual+1, 1);
                 enemigoTerrestre.y = enemigoTerrestre.y - enemigoTerrestre.alto/2;
                 this.enemigos_terrestres.push(enemigoTerrestre);
                 this.espacio.agregarCuerpoDinamico(enemigoTerrestre);
                 break;
             case "A":
-                var enemigoAereo = new EnemigoAereo(x, y);
+                var enemigoAereo = new EnemigoAereo(x, y, nivelActual+1, 1);
                 enemigoAereo.y = enemigoAereo.y - enemigoAereo.alto/2;
                 this.enemigos_aereos.push(enemigoAereo);
                 this.espacio.agregarCuerpoDinamico(enemigoAereo);

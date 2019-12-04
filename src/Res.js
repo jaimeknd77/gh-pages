@@ -47,6 +47,8 @@ var imagenes = {
     suelo_2 : "res/suelo_2.png",
     suelo_3 : "res/suelo_3.png",
 
+    destruible : "res/bloque_destruible.png",
+
     relleno : "res/relleno_1.png",
 
     corazon_entero : "res/corazon_entero.png",

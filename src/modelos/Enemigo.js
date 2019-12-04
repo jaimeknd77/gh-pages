@@ -1,6 +1,6 @@
 class Enemigo extends Modelo {
 
-    constructor(rutaImagen, imagenMovimiento, x, y) {
+    constructor(rutaImagen, imagenMovimiento, x, y, vida, ataque) {
         super(rutaImagen, x, y);
 
         this.animacion = new Animacion(imagenMovimiento, this.ancho, this.alto, 6, 3);
@@ -8,8 +8,8 @@ class Enemigo extends Modelo {
         this.vx = 0;
         this.vy = 0;
 
-        this.ataque = 1;
-        this.vida = 2;
+        this.ataque = ataque;
+        this.vida = vida;
 
         this.cadencia = 60;
     }
