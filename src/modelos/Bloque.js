@@ -1,7 +1,10 @@
 class Bloque extends Modelo {
 
-    constructor(rutaImagen, x, y) {
+    constructor(rutaImagen, x, y, cueva) {
         super(rutaImagen, x, y);
+
+        this.cueva = cueva;
+        this.cuevaVisitada = false;
     }
 
     colisiona (modelo){

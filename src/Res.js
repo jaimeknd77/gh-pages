@@ -41,6 +41,8 @@ var imagenes = {
     limite_izquierda : "res/limite_izquierda.png",
     limite_derecha : "res/limite_derecha.png",
 
+    cueva : "res/cueva.png",
+
     esquina_1 : "res/esquina_1.png",
     esquina_2 : "res/esquina_2.png",
     esquina_3 : "res/esquina_3.png",

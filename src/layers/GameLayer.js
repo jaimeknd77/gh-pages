@@ -39,6 +39,28 @@ class GameLayer extends Layer {
     actualizar (){
         this.espacio.actualizar();
 
+        if(this.enemigos_aereos.length == 0 && this.enemigos_terrestres.length == 0){
+            for(var i=0; i < this.bordes.length; i++){
+                if(this.bordes[i] != null && this.bordes[i].cueva && !this.bordes[i].cuevaVisitada){
+                    var aux = this.bordes[i];
+
+                    this.espacio.eliminarCuerpoEstatico(this.bordes[i]);
+                    this.bordes.splice(i, 1);
+                    i = i - 1;
+
+                    var bloque = new Bloque(imagenes.cueva, aux.x, aux.y, true);
+                    bloque.cuevaVisitada = true;
+
+                    this.bordes.push(bloque);
+                    this.espacio.agregarCuerpoEstatico(bloque);
+
+                    console.log("Fin");
+                }
+            }
+
+
+        }
+
         for(var i=0; i < this.enemigos_terrestres.length; i++){
             this.enemigos_terrestres[i].calcularPosJugador(this.jugador);
 
@@ -77,6 +99,21 @@ class GameLayer extends Layer {
                     this.enemigos_terrestres[j].vida -= this.jugador.ataque;
                     if(this.enemigos_terrestres[j].vida <= 0){
                         this.enemigos_terrestres.splice(j, 1);
+                        j = j - 1;
+                    }
+                }
+            }
+
+            for(var j=0; j < this.enemigos_aereos.length; j++){
+                if(this.disparosJugador[i] != null
+                    && this.enemigos_aereos[j] != null
+                    && this.disparosJugador[i].colisiona(this.enemigos_aereos[j])){
+                    this.disparosJugador.splice(i, 1);
+                    i = i - 1;
+
+                    this.enemigos_aereos[j].vida -= this.jugador.ataque;
+                    if(this.enemigos_aereos[j].vida <= 0){
+                        this.enemigos_aereos.splice(j, 1);
                         j = j - 1;
                     }
                 }
@@ -251,57 +288,63 @@ class GameLayer extends Layer {
                 this.espacio.agregarCuerpoDinamico(this.jugador);
                 break;
             case "#":
-                var bloque = new Fondo(imagenes.relleno, x,y);
+                var bloque = new Fondo(imagenes.relleno, x,y, false);
                 bloque.y = bloque.y - bloque.alto/2;
                 this.fondo.push(bloque);
                 break;
             case "U":
-                var bloque = new Bloque(imagenes.limite_arriba, x,y);
+                var bloque = new Bloque(imagenes.limite_arriba, x,y, false);
                 bloque.y = bloque.y - bloque.alto/2;
                 this.bordes.push(bloque);
                 this.espacio.agregarCuerpoEstatico(bloque);
                 break;
             case "D":
-                var bloque = new Bloque(imagenes.limite_abajo, x,y);
+                var bloque = new Bloque(imagenes.limite_abajo, x,y, false);
                 bloque.y = bloque.y - bloque.alto/2;
                 this.bordes.push(bloque);
                 this.espacio.agregarCuerpoEstatico(bloque);
                 break;
             case "L":
-                var bloque = new Bloque(imagenes.limite_izquierda, x,y);
+                var bloque = new Bloque(imagenes.limite_izquierda, x,y, false);
                 bloque.y = bloque.y - bloque.alto/2;
                 this.bordes.push(bloque);
                 this.espacio.agregarCuerpoEstatico(bloque);
                 break;
             case "R":
-                var bloque = new Bloque(imagenes.limite_derecha, x,y);
+                var bloque = new Bloque(imagenes.limite_derecha, x,y, false);
                 bloque.y = bloque.y - bloque.alto/2;
                 this.bordes.push(bloque);
                 this.espacio.agregarCuerpoEstatico(bloque);
                 break;
             case "*":
-                var bloque = new Bloque(imagenes.destruible, x,y);
+                var bloque = new Bloque(imagenes.destruible, x,y, false);
                 bloque.y = bloque.y - bloque.alto/2;
                 this.destruibles.push(bloque);
                 this.espacio.agregarCuerpoEstatico(bloque);
                 break;
+            case "C":
+                var bloque = new Bloque(imagenes.limite_arriba, x,y, true);
+                bloque.y = bloque.y - bloque.alto/2;
+                this.bordes.push(bloque);
+                this.espacio.agregarCuerpoEstatico(bloque);
+                break;
             case "1":
-                var bloque = new Bloque(imagenes.esquina_1, x,y);
+                var bloque = new Bloque(imagenes.esquina_1, x,y, false);
                 bloque.y = bloque.y - bloque.alto/2;
                 this.fondo.push(bloque);
                 break;
             case "2":
-                var bloque = new Bloque(imagenes.esquina_2, x,y);
+                var bloque = new Bloque(imagenes.esquina_2, x,y, false);
                 bloque.y = bloque.y - bloque.alto/2;
                 this.fondo.push(bloque);
                 break;
             case "3":
-                var bloque = new Bloque(imagenes.esquina_3, x,y);
+                var bloque = new Bloque(imagenes.esquina_3, x,y, false);
                 bloque.y = bloque.y - bloque.alto/2;
                 this.fondo.push(bloque);
                 break;
             case "4":
-                var bloque = new Bloque(imagenes.esquina_4, x,y);
+                var bloque = new Bloque(imagenes.esquina_4, x,y, false);
                 bloque.y = bloque.y - bloque.alto/2;
                 this.fondo.push(bloque);
                 break;
