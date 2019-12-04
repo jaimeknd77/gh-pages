@@ -25,6 +25,9 @@ function onKeyDown( event) {
             case 32:
                 controles.disparo = true;
                 break;
+            case 69:
+                controles.dormir = true;
+                break;
         }
 
     }
@@ -58,6 +61,8 @@ function onKeyUp( event) {
             break;
         case 32:
             controles.disparo = false;
+        case 69:
+            controles.dormir = false;
     }
 
 }

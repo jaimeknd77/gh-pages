@@ -22,6 +22,8 @@ class GameLayer extends Layer {
 
         this.enemigos_aereos = [];
 
+        this.enemigos_generadores = [];
+
         this.disparosJugador = [];
 
         this.disparosEnemigos = [];
@@ -56,9 +58,15 @@ class GameLayer extends Layer {
 
                     console.log("Fin");
                 }
+
+                if(this.jugador != null
+                    &&this.bordes[i] != null
+                    && this.jugador.colisiona(this.bordes[i])
+                    && this.bordes[i].cuevaVisitada){
+                    nivelActual += 1;
+                    this.iniciar();
+                }
             }
-
-
         }
 
         for(var i=0; i < this.enemigos_terrestres.length; i++){
@@ -115,6 +123,21 @@ class GameLayer extends Layer {
                     if(this.enemigos_aereos[j].vida <= 0){
                         this.enemigos_aereos.splice(j, 1);
                         j = j - 1;
+                    }
+                }
+            }
+
+            for(var j=0; j < this.enemigos_generadores.length; j++){
+                if(this.disparosJugador[i] != null
+                    && this.enemigos_generadores[j] != null
+                    && this.disparosJugador[i].colisiona(this.enemigos_generadores[j])){
+                    if(!this.enemigos_generadores[j].incapacitado){
+                        this.disparosJugador.splice(i, 1);
+                        i = i - 1;
+
+                        var enemigo = this.enemigos_generadores[j].generarEnemigo();
+                        this.enemigos_terrestres.push(enemigo);
+                        this.espacio.agregarCuerpoDinamico(enemigo);
                     }
                 }
             }
@@ -183,6 +206,17 @@ class GameLayer extends Layer {
             }
         }
 
+        for(var i=0; i < this.enemigos_generadores.length; i++){
+            this.enemigos_generadores[i].actualizar();
+
+            if(this.jugador != null
+                && this.enemigos_generadores[i] != null
+                && this.jugador.colisiona(this.enemigos_generadores[i])){
+                if(controles.dormir){
+                    this.enemigos_generadores[i].incapacitado = true;
+                }
+            }
+        }
     }
 
     dibujar (){
@@ -205,6 +239,10 @@ class GameLayer extends Layer {
 
         for(var i=0; i < this.enemigos_aereos.length; i++){
             this.enemigos_aereos[i].dibujar(this.scrollX, this.scrollY);
+        }
+
+        for(var i=0; i < this.enemigos_generadores.length; i++){
+            this.enemigos_generadores[i].dibujar(this.scrollX, this.scrollY);
         }
 
         for(var i=0; i<this.vidas.length; i++){
@@ -359,6 +397,12 @@ class GameLayer extends Layer {
                 enemigoAereo.y = enemigoAereo.y - enemigoAereo.alto/2;
                 this.enemigos_aereos.push(enemigoAereo);
                 this.espacio.agregarCuerpoDinamico(enemigoAereo);
+                break;
+            case "M":
+                var enemigoGenerador = new EnemigoGenerador(x, y);
+                enemigoGenerador.y = enemigoGenerador.y - enemigoGenerador.alto/2;
+                this.enemigos_generadores.push(enemigoGenerador);
+                this.espacio.agregarCuerpoDinamico(enemigoGenerador);
                 break;
         }
     }
