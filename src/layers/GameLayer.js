@@ -94,7 +94,7 @@ class GameLayer extends Layer {
         this.jugador.dibujar(this.scrollX, this.scrollY);
 
         for(var i=0; i < this.disparosJugador.length; i++){
-            this.disparosJugador[i].dibujar();
+            this.disparosJugador[i].dibujar(this.scrollX, this.scrollY);
         }
 
         //this.corazon.dibujar(this.scrollX, this.scrollY);

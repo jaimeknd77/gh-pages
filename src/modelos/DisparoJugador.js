@@ -1,7 +1,7 @@
 class DisparoJugador extends Modelo {
 
-    constructor(jugador) {
-        super(imagenes.flecha_izquierda, jugador.x, jugador.y);
+    constructor(x, y, jugador) {
+        super(imagenes.flecha_izquierda, x, y);
 
         this.vx = jugador.vx * 3;
         this.vy = jugador.vy * 3;
