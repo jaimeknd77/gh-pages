@@ -26,7 +26,14 @@ class Jugador extends Modelo {
         this.pIzquierda = new Animacion(imagenes.parado_izquierda, this.ancho, this.alto, 3, 1);
         this.pDerecha = new Animacion(imagenes.parado_derecha, this.ancho, this.alto, 3, 1);
 
+        this.dArriba = new Animacion(imagenes.disparo_arriba, this.ancho, this.alto, 0.25, 13, this.finAnimacionDisparar.bind(this));
+        this.dAbajo = new Animacion(imagenes.disparo_abajo, this.ancho, this.alto, 0.25, 13, this.finAnimacionDisparar.bind(this));
+        this.dIzquierda = new Animacion(imagenes.disparo_izquierda, this.ancho, this.alto, 0.25, 13, this.finAnimacionDisparar.bind(this));
+        this.dDerecha = new Animacion(imagenes.disparo_derecha, this.ancho, this.alto, 0.25, 13, this.finAnimacionDisparar.bind(this));
+
         this.animacion = this.pDerecha;
+
+        this.contador = 9;
     }
 
     actualizar(){
@@ -40,6 +47,10 @@ class Jugador extends Modelo {
             this.estado = estados.parado;
         } else {
             this.estado = estados.moviendo;
+        }
+
+        if(this.disparo){
+            this.estado = estados.disparando;
         }
 
         if(this.vy < 0){
@@ -78,6 +89,18 @@ class Jugador extends Modelo {
                     this.animacion = this.pDerecha;
                 }
                 break;
+
+            case estados.disparando:
+                if(this.orientacion == orientaciones.arriba){
+                    this.animacion = this.dArriba;
+                } else if(this.orientacion == orientaciones.abajo){
+                    this.animacion = this.dAbajo;
+                } else if(this.orientacion == orientaciones.izquierda){
+                    this.animacion = this.dIzquierda;
+                } else {
+                    this.animacion = this.dDerecha;
+                }
+                break;
         }
     }
 
@@ -88,40 +111,51 @@ class Jugador extends Modelo {
     }
 
     moverX (direccion){
-        this.vx = direccion * 3;
+        this.vx = direccion * 4;
     }
 
     moverY (direccion){
-        this.vy = direccion * 3;
+        this.vy = direccion * 4;
     }
 
     disparar(){
         if(this.tiempoDisparo == 0){
-            this.tiempoDisparo = this.cadencia;
-            this.estado = estados.disparando;
+            this.disparo = true;
 
             var vx = this.vx;
             var vy = this.vy;
 
+            if(this.vx > 0){
+                vx = 9;
+            } else if(this.vx < 0){
+                vx = -9;
+            }
+
+            if(this.vy > 0){
+                vy = 9;
+            } else if(this.vy < 0){
+                vy = -9;
+            }
+
             if(vx == 0 && vy == 0){
                 switch(this.orientacion){
                     case orientaciones.izquierda:
-                        vx = -5;
+                        vx = -9;
                         break;
                     case orientaciones.derecha:
-                        vx = 5;
+                        vx = 9;
                         break;
                     case orientaciones.arriba:
-                        vy = -5;
+                        vy = -9;
                         break;
                     case orientaciones.abajo:
-                        vy = 5;
+                        vy = 9;
                         break;
                 }
             }
 
+            this.tiempoDisparo = this.cadencia;
             var rutaImagen = this.calcularDireccion(vx, vy);
-
             return new DisparoJugador(rutaImagen, this.x, this.y, vx, vy);
         } else {
             return null;
@@ -154,5 +188,9 @@ class Jugador extends Modelo {
                 return imagenes.flecha_arriba;
             }
         }
+    }
+
+    finAnimacionDisparar(){
+        this.disparo = false;
     }
 }
