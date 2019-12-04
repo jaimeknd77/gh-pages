@@ -16,7 +16,9 @@ class Enemigo extends Modelo {
 
     actualizar(){
         this.animacion.actualizar();
-        this.cadencia--;
+        if(this.cadencia > 0){
+            this.cadencia--;
+        }
     }
 
     dibujar (scrollX, scrollY){
@@ -26,7 +28,7 @@ class Enemigo extends Modelo {
     }
 
     atacar(jugador){
-        if(this.cadencia <= 0){
+        if(this.cadencia == 0){
             jugador.vida -= this.ataque;
             this.cadencia = 60;
             console.log("Ataque");

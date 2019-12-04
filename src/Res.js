@@ -14,10 +14,24 @@ var imagenes = {
     movimiento_izquierda : "res/movimiento_izquierda.png",
     movimiento_derecha : "res/movimiento_derecha.png",
 
+    disparo_arriba : "res/disparo_arriba.png",
+    disparo_abajo : "res/disparo_abajo.png",
+    disparo_izquierda : "res/disparo_izquierda.png",
+    disparo_derecha : "res/disparo_derecha.png",
+
     parado_arriba : "res/arriba_1.png",
     parado_abajo : "res/abajo_1.png",
     parado_izquierda : "res/izquierda_1.png",
     parado_derecha : "res/derecha_1.png",
+
+    flecha_arriba : "res/flecha_arriba.png",
+    flecha_abajo : "res/flecha_abajo.png",
+    flecha_izquierda : "res/flecha_izquierda.png",
+    flecha_izquierda_arriba : "res/flecha_izquierda_arriba.png",
+    flecha_izquierda_abajo : "res/flecha_izquierda_abajo.png",
+    flecha_derecha : "res/flecha_derecha.png",
+    flecha_derecha_arriba : "res/flecha_derecha_arriba.png",
+    flecha_derecha_abajo : "res/flecha_derecha_abajo.png",
 
     limite_arriba : "res/limite_arriba.png",
     limite_abajo : "res/limite_abajo.png",

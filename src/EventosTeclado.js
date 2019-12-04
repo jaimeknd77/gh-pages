@@ -22,6 +22,9 @@ function onKeyDown( event) {
             case 37:
                 controles.moverX = -1;
                 break;
+            case 32:
+                controles.disparo = true;
+                break;
         }
 
     }
@@ -53,6 +56,8 @@ function onKeyUp( event) {
                 controles.moverX = 0;
             }
             break;
+        case 32:
+            controles.disparo = false;
     }
 
 }

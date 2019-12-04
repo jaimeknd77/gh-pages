@@ -20,6 +20,8 @@ class GameLayer extends Layer {
 
         this.enemigos_aereos = [];
 
+        this.disparosJugador = [];
+
         this.cargarMapa("res/" + nivelActual + ".txt");
 
         this.scrollX = this.calcularXInicial();
@@ -57,6 +59,11 @@ class GameLayer extends Layer {
 
         this.jugador.actualizar();
 
+        // Colisiones
+        for(var i=0; i < this.disparosJugador.length; i++){
+
+        }
+
         //this.corazon.x = this.jugador.x; this.corazon.y = this.jugador.y - this.jugador.ancho;
     }
 
@@ -86,11 +93,25 @@ class GameLayer extends Layer {
 
         this.jugador.dibujar(this.scrollX, this.scrollY);
 
+        for(var i=0; i < this.disparosJugador.length; i++){
+            this.disparosJugador[i].dibujar();
+        }
+
         //this.corazon.dibujar(this.scrollX, this.scrollY);
     }
 
 
     procesarControles( ){
+        // Disparar
+        if(controles.disparo){
+            var nuevoDisparo = this.jugador.disparar();
+
+            if(nuevoDisparo != null){
+                this.espacio.agregarCuerpoDinamico(nuevoDisparo);
+                this.disparosJugador.push(nuevoDisparo);
+            }
+        }
+
         // Eje X
         if ( controles.moverX > 0 ){
             this.jugador.moverX(1);

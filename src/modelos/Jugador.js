@@ -9,6 +9,10 @@ class Jugador extends Modelo {
         this.ataque = 2;
         this.vida = 6;
 
+        this.cadencia = 10;
+
+        this.tiempoDisparo = this.cadencia;
+
         this.orientacion = orientaciones.arriba;
         this.estado = estados.moviendo;
 
@@ -27,6 +31,10 @@ class Jugador extends Modelo {
 
     actualizar(){
         this.animacion.actualizar();
+
+        if(this.tiempoDisparo > 0){
+            this.tiempoDisparo--;
+        }
 
         if(this.vx == 0 && this.vy == 0){
             this.estado = estados.parado;
@@ -85,6 +93,17 @@ class Jugador extends Modelo {
 
     moverY (direccion){
         this.vy = direccion * 3;
+    }
+
+    disparar(){
+        if(this.tiempoDisparo == 0){
+            this.tiempoDisparo = this.cadencia;
+            this.estado = estados.disparando;
+
+            return new DisparoJugador(this.x, this.y, this);
+        } else {
+            return null;
+        }
     }
 
 }
