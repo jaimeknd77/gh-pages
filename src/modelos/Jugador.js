@@ -100,10 +100,59 @@ class Jugador extends Modelo {
             this.tiempoDisparo = this.cadencia;
             this.estado = estados.disparando;
 
-            return new DisparoJugador(this.x, this.y, this);
+            var vx = this.vx;
+            var vy = this.vy;
+
+            if(vx == 0 && vy == 0){
+                switch(this.orientacion){
+                    case orientaciones.izquierda:
+                        vx = -5;
+                        break;
+                    case orientaciones.derecha:
+                        vx = 5;
+                        break;
+                    case orientaciones.arriba:
+                        vy = -5;
+                        break;
+                    case orientaciones.abajo:
+                        vy = 5;
+                        break;
+                }
+            }
+
+            var rutaImagen = this.calcularDireccion(vx, vy);
+
+            return new DisparoJugador(rutaImagen, this.x, this.y, vx, vy);
         } else {
             return null;
         }
     }
 
+    calcularDireccion(vx, vy){
+
+
+        if(vx > 0){
+            if(vy > 0){
+                return imagenes.flecha_derecha_abajo;
+            } else if(vy < 0){
+                return imagenes.flecha_derecha_arriba;
+            } else {
+                return imagenes.flecha_derecha;
+            }
+        } else if(vx < 0){
+            if(vy > 0){
+                return imagenes.flecha_izquierda_abajo;
+            } else if(vy < 0){
+                return imagenes.flecha_izquierda_arriba;
+            } else {
+                return imagenes.flecha_izquierda;
+            }
+        } else {
+            if(vy > 0){
+                return imagenes.flecha_abajo;
+            } else if(vy < 0){
+                return imagenes.flecha_arriba;
+            }
+        }
+    }
 }
