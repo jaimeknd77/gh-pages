@@ -8,6 +8,9 @@ class GameLayer extends Layer {
 
         this.inicio = true;
 
+        this.objetos = [];
+        this.encontrada = false;
+
         this.iniciar();
     }
 
@@ -23,8 +26,6 @@ class GameLayer extends Layer {
         this.bordes = [];
 
         this.destruibles = [];
-
-        this.objetos = [];
 
         this.enemigos_terrestres = [];
 
@@ -162,6 +163,7 @@ class GameLayer extends Layer {
                 && this.objetos[i] != null
                 && this.jugador.colisiona(this.objetos[i])){
                 this.cambioArma = true;
+                this.encontrada = true;
                 this.jugador.encontrada = true;
 
                 this.espacio.eliminarCuerpoEstatico(this.objetos[i]);
@@ -433,6 +435,9 @@ class GameLayer extends Layer {
         switch(simbolo) {
             case "J":
                 this.jugador = new Jugador(x, y);
+                if(this.encontrada){
+                    this.jugador.encontrada = true;
+                }
                 this.jugador.y = this.jugador.y - this.jugador.alto/2;
                 this.espacio.agregarCuerpoDinamico(this.jugador);
                 break;
