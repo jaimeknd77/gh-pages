@@ -6,10 +6,16 @@ class GameLayer extends Layer {
         this.aMapa = 480;
         this.lMapa = 320;
 
+        this.inicio = true;
+
         this.iniciar();
     }
 
     iniciar() {
+        this.empezar = new Fondo(imagenes.controles, 480/2, 320/2);
+        this.cambio_arma = new Fondo(imagenes.cambio_arma, 480/2, 320/2);
+        this.cambioArma = false;
+
         this.espacio = new Espacio(0);
 
         this.fondo = [];
@@ -17,6 +23,8 @@ class GameLayer extends Layer {
         this.bordes = [];
 
         this.destruibles = [];
+
+        this.objetos = [];
 
         this.enemigos_terrestres = [];
 
@@ -36,9 +44,20 @@ class GameLayer extends Layer {
         this.vidas = [];
 
         this.calcularVida(this.jugador);
+
+        this.hasGanado = new Fondo(imagenes.ganar, 480/2, 320/2);
+        this.ganar = false;
+        this.hasPerdido = new Fondo(imagenes.perder, 480/2, 320/2);
+        this.perder = false;
+
+        this.arma = new Fondo(imagenes.arco, 480*0.05, 320*0.10);
     }
 
     actualizar (){
+        if(this.perder || this.ganar || this.inicio || this.cambioArma){
+            return;
+        }
+
         this.espacio.actualizar();
 
         if(this.enemigos_aereos.length == 0 && this.enemigos_terrestres.length == 0){
@@ -55,16 +74,19 @@ class GameLayer extends Layer {
 
                     this.bordes.push(bloque);
                     this.espacio.agregarCuerpoEstatico(bloque);
-
-                    console.log("Fin");
                 }
 
                 if(this.jugador != null
                     &&this.bordes[i] != null
                     && this.jugador.colisiona(this.bordes[i])
                     && this.bordes[i].cuevaVisitada){
-                    nivelActual += 1;
-                    this.iniciar();
+                    if(nivelActual == nivelMaximo){
+                        this.ganar = true;
+                    } else {
+                        nivelActual += 1;
+                        this.iniciar();
+                    }
+
                 }
             }
         }
@@ -77,8 +99,7 @@ class GameLayer extends Layer {
             if(this.enemigos_terrestres[i] != null
                 && this.jugador!= null
                 && this.jugador.colisiona(this.enemigos_terrestres[i])){
-                if(controles.disparo
-                    && this.jugador.espada){
+                if(controles.disparo && this.jugador.espada){
                     this.enemigos_terrestres[i].vida -= this.jugador.ataque;
                     if(this.enemigos_terrestres[i].vida <= 0){
                         this.enemigos_terrestres.splice(i, 1);
@@ -87,7 +108,7 @@ class GameLayer extends Layer {
                 } else {
                     this.enemigos_terrestres[i].atacar(this.jugador);
                     if(this.jugador.vida <= 0){
-                        this.iniciar();
+                        this.perder = true;
                     }
                 }
             }
@@ -104,8 +125,7 @@ class GameLayer extends Layer {
             if(this.enemigos_aereos[i] != null
                 && this.jugador!= null
                 && this.jugador.colisiona(this.enemigos_aereos[i])){
-                if(controles.disparo
-                    && this.jugador.espada){
+                if(controles.disparo && this.jugador.espada){
                     this.enemigos_aereos[i].vida -= this.jugador.ataque;
                     if(this.enemigos_aereos[i].vida <= 0){
                         this.enemigos_aereos.splice(i, 1);
@@ -129,12 +149,24 @@ class GameLayer extends Layer {
             if(this.enemigos_generadores[i] != null
                 && this.jugador!= null
                 && this.jugador.colisiona(this.enemigos_generadores[i])){
-                if(controles.disparo
-                    && this.jugador.espada){
+                if(controles.disparo && this.jugador.espada){
                     var enemigo = this.enemigos_generadores[i].generarEnemigo();
                     this.enemigos_terrestres.push(enemigo);
                     this.espacio.agregarCuerpoDinamico(enemigo);
                 }
+            }
+        }
+
+        for(var i=0; i < this.objetos.length; i++){
+            if(this.jugador != null
+                && this.objetos[i] != null
+                && this.jugador.colisiona(this.objetos[i])){
+                this.cambioArma = true;
+                this.jugador.encontrada = true;
+
+                this.espacio.eliminarCuerpoEstatico(this.objetos[i]);
+                this.objetos.splice(i, 1);
+                i = i - 1;
             }
         }
 
@@ -224,7 +256,7 @@ class GameLayer extends Layer {
                 i = i - 1;
 
                 if(this.jugador.vida <= 0){
-                    this.iniciar();
+                    this.perder = true;
                 }
             }
 
@@ -284,6 +316,12 @@ class GameLayer extends Layer {
             this.vidas[i].dibujar();
         }
 
+        this.arma.dibujar();
+
+        for(var i=0; i < this.objetos.length; i++){
+            this.objetos[i].dibujar(this.scrollX, this.scrollY);
+        }
+
         this.jugador.dibujar(this.scrollX, this.scrollY);
 
         for(var i=0; i < this.disparosJugador.length; i++){
@@ -294,28 +332,55 @@ class GameLayer extends Layer {
             this.disparosEnemigos[i].dibujar(this.scrollX, this.scrollY);
         }
 
+        if(this.perder){
+            this.hasPerdido.dibujar();
+        }
+
+        if(this.ganar){
+            this.hasGanado.dibujar();
+        }
+
+        if(this.cambioArma){
+            this.cambio_arma.dibujar();
+        }
+
+        if(this.inicio){
+            this.empezar.dibujar();
+        }
+
     }
 
 
     procesarControles( ){
-        // Disparar
-        if(controles.disparo && !this.jugador.espada){
-            var nuevoDisparo = this.jugador.disparar();
+        if(controles.continuar && this.inicio){
+            this.inicio = false;
+        }
+        if(controles.continuar && this.cambioArma){
+            this.cambioArma = false;
+        }
 
-            if(nuevoDisparo != null){
-                this.disparosJugador.push(nuevoDisparo);
-                this.espacio.agregarCuerpoDinamico(nuevoDisparo);
+        // Disparar
+        if(controles.disparo){
+            if(this.jugador.espada){
+                this.jugador.atacar();
+            } else {
+                var nuevoDisparo = this.jugador.disparar();
+
+                if(nuevoDisparo != null){
+                    this.disparosJugador.push(nuevoDisparo);
+                    this.espacio.agregarCuerpoDinamico(nuevoDisparo);
+                }
             }
-        } else if(controles.disparo && this.jugador.espada) {
-            this.jugador.atacar();
         }
 
         // Cambiar arma
-        if(controles.cambiarArma){
-            if(this.jugador.espada){
-                this.jugador.espada = false;
-            } else {
+        if(this.jugador.encontrada){
+            if(controles.espada){
                 this.jugador.espada = true;
+                this.arma = new Fondo(imagenes.espada, 480*0.05, 320*0.10);
+            } else {
+                this.jugador.espada = false;
+                this.arma = new Fondo(imagenes.arco, 480*0.05, 320*0.10);
             }
         }
 
@@ -444,11 +509,17 @@ class GameLayer extends Layer {
                 this.enemigos_aereos.push(enemigoAereo);
                 this.espacio.agregarCuerpoDinamico(enemigoAereo);
                 break;
-            case "M":
+            case "G":
                 var enemigoGenerador = new EnemigoGenerador(x, y);
                 enemigoGenerador.y = enemigoGenerador.y - enemigoGenerador.alto/2;
                 this.enemigos_generadores.push(enemigoGenerador);
                 this.espacio.agregarCuerpoDinamico(enemigoGenerador);
+                break;
+            case "E":
+                var espada = new Espada(x, y);
+                espada.y = espada.y - espada.alto/2;
+                this.objetos.push(espada);
+                this.espacio.agregarCuerpoEstatico(espada);
                 break;
         }
     }

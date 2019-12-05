@@ -22,6 +22,9 @@ var imagenes = {
     disparo_izquierda : "res/disparo_izquierda.png",
     disparo_derecha : "res/disparo_derecha.png",
 
+    espada : "res/espada.png",
+    arco : "res/arco.png",
+
     espada_arriba : "res/espada_arriba.png",
     espada_abajo : "res/espada_abajo.png",
     espada_izquierda : "res/espada_izquierda.png",
@@ -63,6 +66,11 @@ var imagenes = {
 
     corazon_entero : "res/corazon_entero.png",
     corazon_mitad : "res/corazon_mitad.png",
+
+    ganar : "res/ganar.png",
+    perder : "res/perder.png",
+    controles : "res/controles.png",
+    cambio_arma : "res/cambio_arma.png",
 };
 
 var rutasImagenes = Object.values(imagenes);

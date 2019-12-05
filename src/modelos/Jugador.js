@@ -39,12 +39,12 @@ class Jugador extends Modelo {
         this.animacion = this.pDerecha;
 
         this.espada = false;
+
+        this.encontrada = false;
     }
 
     actualizar(){
         this.animacion.actualizar();
-
-        console.log("Espada: " + this.espada);
 
         if(this.tiempoDisparo > 0){
             this.tiempoDisparo--;
@@ -112,7 +112,6 @@ class Jugador extends Modelo {
                     }
                 } else if(this.orientacion == orientaciones.izquierda){
                     if(this.espada){
-                        console.log("Entra");
                         this.animacion = this.eIzquierda;
                     } else {
                         this.animacion = this.dIzquierda;
@@ -146,36 +145,19 @@ class Jugador extends Modelo {
         if(this.tiempoDisparo == 0){
             this.disparo = true;
 
-            var vx = this.vx;
-            var vy = this.vy;
+            var vx = 0;
+            var vy = 0;
 
-            if(this.vx > 0){
+            if(controles.dispararX == 1){
                 vx = 9;
-            } else if(this.vx < 0){
+            } else if(controles.dispararX == -1){
                 vx = -9;
             }
 
-            if(this.vy > 0){
+            if(controles.dispararY == 1){
                 vy = 9;
-            } else if(this.vy < 0){
+            } else if(controles.dispararY == -1){
                 vy = -9;
-            }
-
-            if(vx == 0 && vy == 0){
-                switch(this.orientacion){
-                    case orientaciones.izquierda:
-                        vx = -9;
-                        break;
-                    case orientaciones.derecha:
-                        vx = 9;
-                        break;
-                    case orientaciones.arriba:
-                        vy = -9;
-                        break;
-                    case orientaciones.abajo:
-                        vy = 9;
-                        break;
-                }
             }
 
             this.tiempoDisparo = this.cadencia;
@@ -187,9 +169,11 @@ class Jugador extends Modelo {
     }
 
     atacar(){
-        if(this.tiempoDisparo == 0){
-            this.disparo = true;
-            this.tiempoDisparo = this.cadencia;
+        if(this.espada){
+            if(this.tiempoDisparo == 0){
+                this.disparo = true;
+                this.tiempoDisparo = this.cadencia;
+            }
         }
     }
 

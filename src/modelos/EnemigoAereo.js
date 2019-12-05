@@ -1,7 +1,9 @@
 class EnemigoAereo extends Enemigo {
 
     constructor (x, y, vida, ataque){
-        super(imagenes.enemigo_aereo, imagenes.enemigo_aereo_movimiento, x, y, vida, ataque);
+        super(imagenes.enemigo_aereo, x, y, vida, ataque);
+
+        this.animacion = new Animacion(imagenes.enemigo_aereo_movimiento, 31.33, 37, 6, 3);
 
         this.vx = 1;
         this.vy = 1;
@@ -22,9 +24,6 @@ class EnemigoAereo extends Enemigo {
     mover(){
         this.vx = Math.floor(Math.random() * (2 - (-1)) + (-1));
         this.vy = Math.floor(Math.random() * (2 - (-1)) + (-1));
-
-        console.log(this.vx);
-        console.log(this.vy);
     }
 
     disparar(jugador){
