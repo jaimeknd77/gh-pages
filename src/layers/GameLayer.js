@@ -74,10 +74,21 @@ class GameLayer extends Layer {
 
             this.enemigos_terrestres[i].actualizar();
 
-            if(this.enemigos_terrestres[i].colisiona(this.jugador)){
-                this.enemigos_terrestres[i].atacar(this.jugador);
-                if(this.jugador.vida <= 0){
-                    this.iniciar();
+            if(this.enemigos_terrestres[i] != null
+                && this.jugador!= null
+                && this.jugador.colisiona(this.enemigos_terrestres[i])){
+                if(controles.disparo
+                    && this.jugador.espada){
+                    this.enemigos_terrestres[i].vida -= this.jugador.ataque;
+                    if(this.enemigos_terrestres[i].vida <= 0){
+                        this.enemigos_terrestres.splice(i, 1);
+                        i = i - 1;
+                    }
+                } else {
+                    this.enemigos_terrestres[i].atacar(this.jugador);
+                    if(this.jugador.vida <= 0){
+                        this.iniciar();
+                    }
                 }
             }
         }
@@ -88,6 +99,42 @@ class GameLayer extends Layer {
             if(disparo != null){
                 this.disparosEnemigos.push(disparo);
                 this.espacio.agregarCuerpoDinamico(disparo);
+            }
+
+            if(this.enemigos_aereos[i] != null
+                && this.jugador!= null
+                && this.jugador.colisiona(this.enemigos_aereos[i])){
+                if(controles.disparo
+                    && this.jugador.espada){
+                    this.enemigos_aereos[i].vida -= this.jugador.ataque;
+                    if(this.enemigos_aereos[i].vida <= 0){
+                        this.enemigos_aereos.splice(i, 1);
+                        i = i - 1;
+                    }
+                }
+            }
+        }
+
+        for(var i=0; i < this.enemigos_generadores.length; i++){
+            this.enemigos_generadores[i].actualizar();
+
+            if(this.jugador != null
+                && this.enemigos_generadores[i] != null
+                && this.jugador.colisiona(this.enemigos_generadores[i])){
+                if(controles.dormir){
+                    this.enemigos_generadores[i].incapacitado = true;
+                }
+            }
+
+            if(this.enemigos_generadores[i] != null
+                && this.jugador!= null
+                && this.jugador.colisiona(this.enemigos_generadores[i])){
+                if(controles.disparo
+                    && this.jugador.espada){
+                    var enemigo = this.enemigos_generadores[i].generarEnemigo();
+                    this.enemigos_terrestres.push(enemigo);
+                    this.espacio.agregarCuerpoDinamico(enemigo);
+                }
             }
         }
 
@@ -205,18 +252,6 @@ class GameLayer extends Layer {
                 }
             }
         }
-
-        for(var i=0; i < this.enemigos_generadores.length; i++){
-            this.enemigos_generadores[i].actualizar();
-
-            if(this.jugador != null
-                && this.enemigos_generadores[i] != null
-                && this.jugador.colisiona(this.enemigos_generadores[i])){
-                if(controles.dormir){
-                    this.enemigos_generadores[i].incapacitado = true;
-                }
-            }
-        }
     }
 
     dibujar (){
@@ -264,12 +299,23 @@ class GameLayer extends Layer {
 
     procesarControles( ){
         // Disparar
-        if(controles.disparo){
+        if(controles.disparo && !this.jugador.espada){
             var nuevoDisparo = this.jugador.disparar();
 
             if(nuevoDisparo != null){
                 this.disparosJugador.push(nuevoDisparo);
                 this.espacio.agregarCuerpoDinamico(nuevoDisparo);
+            }
+        } else if(controles.disparo && this.jugador.espada) {
+            this.jugador.atacar();
+        }
+
+        // Cambiar arma
+        if(controles.cambiarArma){
+            if(this.jugador.espada){
+                this.jugador.espada = false;
+            } else {
+                this.jugador.espada = true;
             }
         }
 

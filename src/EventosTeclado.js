@@ -28,6 +28,9 @@ function onKeyDown( event) {
             case 69:
                 controles.dormir = true;
                 break;
+            case 81:
+                controles.cambiarArma = true;
+                break;
         }
 
     }
@@ -62,7 +65,13 @@ function onKeyUp( event) {
         case 32:
             controles.disparo = false;
         case 69:
+            if(controles.dormir){
             controles.dormir = false;
+            }
+        case 81:
+            if(controles.cambiarArma){
+                controles.cambiarArma = false;
+            }
     }
 
 }

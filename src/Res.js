@@ -22,6 +22,11 @@ var imagenes = {
     disparo_izquierda : "res/disparo_izquierda.png",
     disparo_derecha : "res/disparo_derecha.png",
 
+    espada_arriba : "res/espada_arriba.png",
+    espada_abajo : "res/espada_abajo.png",
+    espada_izquierda : "res/espada_izquierda.png",
+    espada_derecha : "res/espada_derecha.png",
+
     parado_arriba : "res/arriba_1.png",
     parado_abajo : "res/abajo_1.png",
     parado_izquierda : "res/izquierda_1.png",
